@@ -1,0 +1,47 @@
+version: "3.7"
+
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - db
+    ports:
+      - "8081:80"
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=123456
+      - PMA_HOST=db
+      - PMA_PORT=3306
+    depends_on:
+      - db
+
+  db:
+    image: mysql:latest
+    container_name: db
+    volumes:
+      - ./database/data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=capco_db
+    command: --default-authentication-plugin=mysql_native_password
+      
+  backend:
+    image: node:16-alpine
+    working_dir: /home/node/app
+    restart: always
+    container_name: capco_api
+    links:
+      - db
+    depends_on:
+      - db
+      - phpmyadmin
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/home/node/app
+    expose:
+      - 3000
+    command: 'npm start'
