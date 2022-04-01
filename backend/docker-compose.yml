@@ -29,19 +29,16 @@ services:
     command: --default-authentication-plugin=mysql_native_password
       
   backend:
-    image: node:16-alpine
-    working_dir: /home/node/app
-    restart: always
     container_name: capco_api
+    restart: always
+    build: .
+    volumes:
+      - ./src:/var/www/src
+      - ./test:/var/www/test
+    ports:
+      - "3001:3000"
     links:
       - db
     depends_on:
       - db
       - phpmyadmin
-    ports:
-      - "3001:3000"
-    volumes:
-      - .:/home/node/app
-    expose:
-      - 3000
-    command: npm install
