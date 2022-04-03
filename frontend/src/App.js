@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { Row, Col } from 'antd'
+import { Header } from 'antd/lib/layout/layout'
+import Task from './components/Task'
+import './App.css'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Row>
+        <Col xs={3} xl={8}></Col>
+        <Col xs={18} xl={8}>
+          <Header style={{ backgroundColor: 'white' }}>Task list</Header>
+          <Task title={'Test'} detail={'Test Detail'}></Task>
+        </Col>
+        <Col xs={3} xl={8}></Col>
+      </Row>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
