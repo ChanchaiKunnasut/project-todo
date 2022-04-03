@@ -20,7 +20,7 @@ services:
     image: mysql:latest
     container_name: db
     volumes:
-      - ./database/data:/var/lib/mysql
+      - ./backend/database/data:/var/lib/mysql
     ports:
       - "3306:3306"
     environment:
@@ -28,17 +28,17 @@ services:
       - MYSQL_DATABASE=capco_db
     command: --default-authentication-plugin=mysql_native_password
       
-  backend:
-    container_name: capco_api
-    restart: always
-    build: .
-    volumes:
-      - ./src:/var/www/src
-      - ./test:/var/www/test
-    ports:
-      - "3001:3000"
-    links:
-      - db
-    depends_on:
-      - db
-      - phpmyadmin
+  # backend:
+  #   container_name: capco_api
+  #   restart: always
+  #   build: ./backend
+  #   volumes:
+  #     - ./backend/src:/var/www/src
+  #     - ./backend/test:/var/www/test
+  #   ports:
+  #     - "3001:3001"
+  #   links:
+  #     - db
+  #   depends_on:
+  #     - db
+  #     - phpmyadmin
