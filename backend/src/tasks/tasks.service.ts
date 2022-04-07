@@ -10,11 +10,11 @@ export class TasksService {
     private tasksRepository: Repository<Task>,
   ) {}
 
-  async getTasks(task: Task): Promise<Task[]> {
+  async getTasks(): Promise<Task[]> {
     return await this.tasksRepository.find();
   }
 
-  async getTask(_id: number): Promise<Task[]> {
+  async getTaskById(_id: number): Promise<Task[]> {
     return await this.tasksRepository.find({
       select: ['taskTitle', 'status'],
       where: [{ id: _id }],

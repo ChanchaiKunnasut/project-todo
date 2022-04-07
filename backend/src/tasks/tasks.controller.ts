@@ -7,8 +7,13 @@ export class TasksController {
   constructor(private service: TasksService) {}
 
   @Get(':id')
-  get(@Param() param) {
-    return this.service.getTask(param.id);
+  getTaskById(@Param() param) {
+    return this.service.getTaskById(param.id);
+  }
+
+  @Get()
+  getTasks() {
+    return this.service.getTasks();
   }
 
   @Post()
