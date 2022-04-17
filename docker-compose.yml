@@ -28,27 +28,27 @@ services:
       - MYSQL_DATABASE=capco_db
     command: --default-authentication-plugin=mysql_native_password
       
-  # backend:
-  #   container_name: capco_todo_api
-  #   restart: always
-  #   build: ./backend
-  #   volumes:
-  #     - ./backend/src:/var/www/src
-  #     - ./backend/test:/var/www/test
-  #   ports:
-  #     - "3001:3001"
-  #   links:
-  #     - db
-  #   depends_on:
-  #     - db
-  #     - phpmyadmin
-  # frontend:
-  #   container_name: capco_todo_frontend
-  #   restart: always
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #   volumes:
-  #     - ./frontend:/app
-  #   ports:
-  #     - "3000:3000"
+  backend:
+    container_name: capco_todo_api
+    restart: always
+    build: ./backend
+    volumes:
+      - ./backend/src:/var/www/src
+      - ./backend/test:/var/www/test
+    ports:
+      - "3001:3001"
+    links:
+      - db
+    depends_on:
+      - db
+      - phpmyadmin
+  frontend:
+    container_name: capco_todo_frontend
+    restart: always
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
