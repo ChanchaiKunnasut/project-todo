@@ -39,3 +39,21 @@ export const GetTasks = async (id) => {
     return e
   }
 }
+
+export const UpdateTaskByID = async (data) => {
+  try {
+    const result = await instance
+      .request({
+        url: `/tasks`,
+        method: 'Post',
+        data: data,
+      })
+      .then((response) => {
+        return response
+      })
+    return result
+  } catch (e) {
+    console.error(e)
+    return e
+  }
+}

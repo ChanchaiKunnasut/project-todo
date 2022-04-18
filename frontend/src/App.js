@@ -2,24 +2,38 @@ import { Row, Col, message } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 import React, { useEffect, useState } from 'react'
 import Task from './components/Task'
-import { GetTasks } from './services'
+import { GetTasks, UpdateTaskByID } from './services'
 import './App.css'
 
 function App() {
   const [tasks, setTasks] = useState([])
-  const onChange = (e) => {
-    message.info('This is a normal message =>', e.target.checked)
-  }
-  useEffect(() => {
-    const getTasks = async () => {
-      try {
-        const result = await GetTasks()
-        console.log(result?.data)
-        await setTasks(result.data)
-      } catch (e) {
-        console.error(e)
-      }
+  const getTasks = async () => {
+    try {
+      const result = await GetTasks()
+      await setTasks(result.data)
+    } catch (e) {
+      console.error(e)
     }
+  }
+  const onChange = async (e, taskId) => {
+    try {
+      const result = await UpdateTaskByID({
+        id: taskId,
+        status: e.target.checked,
+      })
+      if (e.target.checked) {
+        message.info(`Task id:${taskId} is done.`)
+      } else {
+        message.info(`Task id:${taskId} is not done.`)
+      }
+
+      getTasks()
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  useEffect(() => {
     getTasks()
   }, [])
   return (
@@ -32,9 +46,11 @@ function App() {
             <Task
               key={index}
               title={obj.taskTitle}
-              detail={'Test Detail'}
+              detail={'Hard Code Detail'}
+              taskId={obj.id}
+              taskStatus={obj.status}
               onChange={onChange}
-            ></Task>
+            />
           ))}
         </Col>
         <Col xs={3} xl={8}></Col>

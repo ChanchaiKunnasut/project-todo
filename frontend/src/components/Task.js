@@ -1,7 +1,7 @@
 import { Row, Col, Checkbox } from 'antd'
 import './Task.css'
 
-function Task({ title, detail, onChange }) {
+function Task({ title, detail, onChange, taskId, taskStatus }) {
   return (
     <div className='Task'>
       <Row>
@@ -9,7 +9,9 @@ function Task({ title, detail, onChange }) {
           Title: {title}
         </Col>
         <Col span={8}>
-          <Checkbox onChange={(e) => onChange(e)}>Done?</Checkbox>
+          <Checkbox onChange={(e) => onChange(e, taskId)} checked={taskStatus}>
+            Done?
+          </Checkbox>
         </Col>
       </Row>
       <Row>Detail: {detail}</Row>
