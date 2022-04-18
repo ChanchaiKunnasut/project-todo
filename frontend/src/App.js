@@ -2,17 +2,17 @@ import { Row, Col } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 import React, { useEffect, useState } from 'react'
 import Task from './components/Task'
-import { GetTaskByID } from './services'
+import { GetTasks } from './services'
 import './App.css'
 
 function App() {
-  const [task, setTask] = useState([])
+  const [tasks, setTasks] = useState([])
   useEffect(() => {
     const getTaskByID = async () => {
       try {
-        const result = await GetTaskByID(1)
-        console.log(result?.data[0])
-        await setTask(result.data[0])
+        const result = await GetTasks(1)
+        console.log(result?.data)
+        await setTasks(result.data)
       } catch (e) {
         console.error(e)
       }
@@ -25,7 +25,9 @@ function App() {
         <Col xs={3} xl={8}></Col>
         <Col xs={18} xl={8}>
           <Header style={{ backgroundColor: 'white' }}>Task list</Header>
-          <Task title={task.taskTitle} detail={'Test Detail'}></Task>
+          {tasks.map((obj) => (
+            <Task title={obj.taskTitle} detail={'Test Detail'}></Task>
+          ))}
         </Col>
         <Col xs={3} xl={8}></Col>
       </Row>

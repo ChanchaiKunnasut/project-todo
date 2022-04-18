@@ -22,3 +22,20 @@ export const GetTaskByID = async (id) => {
     return e
   }
 }
+
+export const GetTasks = async (id) => {
+  try {
+    const result = await instance
+      .request({
+        url: `/tasks`,
+        method: 'GET',
+      })
+      .then((response) => {
+        return response
+      })
+    return result
+  } catch (e) {
+    console.error(e)
+    return e
+  }
+}
