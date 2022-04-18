@@ -1,4 +1,4 @@
-import { Row, Col } from 'antd'
+import { Row, Col, message } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
 import React, { useEffect, useState } from 'react'
 import Task from './components/Task'
@@ -7,17 +7,20 @@ import './App.css'
 
 function App() {
   const [tasks, setTasks] = useState([])
+  const onChange = (e) => {
+    message.info('This is a normal message =>', e.target.checked)
+  }
   useEffect(() => {
-    const getTaskByID = async () => {
+    const getTasks = async () => {
       try {
-        const result = await GetTasks(1)
+        const result = await GetTasks()
         console.log(result?.data)
         await setTasks(result.data)
       } catch (e) {
         console.error(e)
       }
     }
-    getTaskByID()
+    getTasks()
   }, [])
   return (
     <div className='App'>
@@ -25,8 +28,13 @@ function App() {
         <Col xs={3} xl={8}></Col>
         <Col xs={18} xl={8}>
           <Header style={{ backgroundColor: 'white' }}>Task list</Header>
-          {tasks.map((obj) => (
-            <Task title={obj.taskTitle} detail={'Test Detail'}></Task>
+          {tasks.map((obj, index) => (
+            <Task
+              key={index}
+              title={obj.taskTitle}
+              detail={'Test Detail'}
+              onChange={onChange}
+            ></Task>
           ))}
         </Col>
         <Col xs={3} xl={8}></Col>
